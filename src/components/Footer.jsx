@@ -59,7 +59,7 @@ export default function Footer() {
               <FooterLink href="/collections" label="Collections" />
               <FooterLink href="/blog" label="Blog" />
               <FooterLink href="/about" label="About" />
-              <FooterLink href="/journal" label="Contact" />
+              <FooterLink href="/contact" label="Contact" />
             </ul>
           </div>
 
