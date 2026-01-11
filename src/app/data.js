@@ -79,9 +79,9 @@ export const collectionsData = [
         projectType: "Fashion Collection",
         date: "July 2024",
         location: "Colombo, Sri Lanka",
-        products: "Structured leather bodice, distressed denim skirt.",
-        materials: "Recycled denim, chrome hardware, latex, acrylic paint.",
-        technique: "Laser cutting, hand-painting, structural draping.",
+        products: "Rib corset, jacket, mini skirt, over the knee boots.",
+        materials: "Crystal beads, stainless steel wires, foll, spray paint,-glass beads, rhine stones, sillicon, velvet, dyed cotton greige, twill, wool and ribbon.",
+        technique: "Boot making, satin stitch embroidery, wire armature sculpting and foil sculpting",
       },
       {
         id: "4",
