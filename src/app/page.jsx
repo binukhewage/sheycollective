@@ -159,7 +159,7 @@ export default function Home() {
                 className="text-3xl md:text-3xl font-medium leading-tight text-neutral-200"
                 style={{ fontFamily: 'var(--font-playfair), serif' }}
             >
-              Shey Collective was founnded with a vision to redifine modern luxury through{" "}
+              Shey Collective was founded with a vision to redifine modern luxury through{" "}
               <span className="text-red-600 italic pr-2">bold,</span>
               custom-made fashion that celebrates individuality and refined craftsmanship. Rooted in innovation and artistic expression, the brand creates statement pieces that empower women, balance avant-garde design with timeless elegance, and transform fashion into a powerful form of self-expression.
             </p>

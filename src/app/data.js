@@ -22,7 +22,7 @@ export const collectionsData = [
         videos: [
           {
             id: "runway",
-            src: "/outfit1vid1.mp4",
+            src: "/outfit1vid1.MP4",
             poster: "/images/outfit1.jpg",
             caption: "Fig. Motion — Runway",
           },
