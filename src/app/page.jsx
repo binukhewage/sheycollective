@@ -110,7 +110,7 @@ export default function Home() {
         {/* 4. "COLLECTIVE" SIGNATURE */}
         <motion.div 
           style={{ y: ySignature }}
-          className="absolute z-30 bottom-[10%] right-[5%] md:right-[10%] pointer-events-none"
+          className="hidden lg:block absolute z-30 bottom-[10%] right-[5%] md:right-[10%] pointer-events-none"
         >
            <motion.span
               initial={{ opacity: 0, x: 50 }}
