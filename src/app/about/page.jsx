@@ -203,7 +203,7 @@ export default function About() {
 
                     <div className="space-y-6 text-neutral-400 leading-relaxed max-w-md">
                         <p>
-                            The creative force behind the SHEY Collective. Shehara’s vision was born from a desire to 
+                            The creative force behind the Shey Collective. Shehara’s vision was born from a desire to 
                             dismantle the ordinary. With a background rooted in artistic expression and 
                             a rebellion against fast fashion, she sculpts garments that are as much 
                             art pieces as they are attire.

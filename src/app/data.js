@@ -19,11 +19,20 @@ export const collectionsData = [
           "/images/outfit1-3.jpg",
           "/images/outfit1-4.jpg",
         ], 
-        video: {
-          type: "video",
-          src: "/outfit1vid1.mp4",
-          poster: "/images/outfit1.jpg", // thumbnail
-        },
+        videos: [
+          {
+            id: "runway",
+            src: "/outfit1vid1.mp4",
+            poster: "/images/outfit1.jpg",
+            caption: "Fig. Motion — Runway",
+          },
+          {
+            id: "detail",
+            src: "/outfit1vid2.mp4",
+            poster: "/images/outfit1-2.jpg",
+            caption: "Fig. Motion — Detail Study",
+          },
+        ],
         projectType: "Fashion Collection",
         date: "July 2024",
         location: "Colombo, Sri Lanka",

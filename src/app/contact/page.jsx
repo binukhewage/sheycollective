@@ -64,7 +64,7 @@ export default function Contact() {
               <address className="not-italic text-neutral-500 font-light text-sm leading-loose">
                 No: 7A,
                 <br />
-                Thalawaththa, Gonawala
+                Thalwaththa, Gonawala
                 <br />
                 Kelaniya,
                 <br />

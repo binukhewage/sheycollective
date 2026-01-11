@@ -22,14 +22,14 @@ export default function OutfitPage() {
   useEffect(() => {
     if (outfit?.video && videoRef.current) {
       // Browsers require mute for autoplay
-      videoRef.current.muted = true; 
+      videoRef.current.muted = true;
       const playPromise = videoRef.current.play();
 
       if (playPromise !== undefined) {
         playPromise.catch((error) => {
           console.log("Autoplay prevented:", error);
-          // Auto-play was prevented. This usually happens if the user 
-          // hasn't interacted with the document yet. 
+          // Auto-play was prevented. This usually happens if the user
+          // hasn't interacted with the document yet.
         });
       }
     }
@@ -59,7 +59,6 @@ export default function OutfitPage() {
 
         <div className="max-w-[1600px] mx-auto px-6 pt-32 pb-20 relative z-10">
           <div className="grid lg:grid-cols-12 gap-12 lg:gap-24 items-start">
-            
             {/* --- LEFT COLUMN: STICKY INFO --- */}
             <div className="lg:col-span-4 lg:sticky lg:top-32 h-fit space-y-16 z-20">
               <motion.div
@@ -101,13 +100,17 @@ export default function OutfitPage() {
 
             {/* --- RIGHT COLUMN: GALLERY + VIDEO --- */}
             <div className="lg:col-span-8 grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-12 pt-12 md:pt-0">
-              
               {/* Image Loop */}
               {outfit.gallery.map((imgSrc, index) => {
                 const isFirstImage = index === 0;
-                const gridSpanClass = isFirstImage ? "md:col-span-2" : "md:col-span-1";
-                const aspectRatioClass = isFirstImage ? "aspect-[16/9] md:aspect-[21/9]" : "aspect-[2/3] md:aspect-[3/4]";
-                const topMargin = index === 1 || index === 2 ? "mt-8 md:mt-16" : "";
+                const gridSpanClass = isFirstImage
+                  ? "md:col-span-2"
+                  : "md:col-span-1";
+                const aspectRatioClass = isFirstImage
+                  ? "aspect-[16/9] md:aspect-[21/9]"
+                  : "aspect-[2/3] md:aspect-[3/4]";
+                const topMargin =
+                  index === 1 || index === 2 ? "mt-8 md:mt-16" : "";
 
                 return (
                   <motion.div
@@ -115,11 +118,17 @@ export default function OutfitPage() {
                     initial={{ opacity: 0, y: 50 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, margin: "-5%" }}
-                    transition={{ duration: 0.8, ease: "easeOut", delay: index * 0.1 }}
+                    transition={{
+                      duration: 0.8,
+                      ease: "easeOut",
+                      delay: index * 0.1,
+                    }}
                     className={`relative w-full cursor-zoom-in group ${gridSpanClass} ${topMargin}`}
                     onClick={() => setSelectedImage(imgSrc)}
                   >
-                    <div className={`relative ${aspectRatioClass} w-full overflow-hidden bg-neutral-900 shadow-2xl`}>
+                    <div
+                      className={`relative ${aspectRatioClass} w-full overflow-hidden bg-neutral-900 shadow-2xl`}
+                    >
                       <Image
                         src={imgSrc}
                         alt={`${outfit.title} detail ${index + 1}`}
@@ -137,45 +146,40 @@ export default function OutfitPage() {
                 );
               })}
 
-              {/* --- CONDITIONAL VIDEO SECTION (FIXED AUTOPLAY) --- */}
-              {outfit.video && (
-                <motion.div
-                    initial={{ opacity: 0, y: 50 }}
+              {/* --- VIDEOS (SIDE BY SIDE ON DESKTOP) --- */}
+              {outfit.videos &&
+                outfit.videos.map((video, index) => (
+                  <motion.div
+                    key={video.id || index}
+                    initial={{ opacity: 0, y: 40 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
-                    transition={{ duration: 0.8 }}
-                    className="md:col-span-2 mt-12 md:mt-24"
-                >
-                    <div className="relative aspect-[9/16] w-full max-w-[420px] mx-auto overflow-hidden bg-neutral-900 shadow-2xl">
-
-                        
-                        <video
-                            ref={videoRef} // Attach ref here
-                            src={outfit.video.src}
-                            poster={outfit.video.poster}
-                            autoPlay
-                            loop
-                            muted
-                            playsInline
-                            controls={true}
-                            className="w-full h-full object-cover opacity-90 group-hover:opacity-100 transition-opacity duration-700"
-                        >
-                            Your browser does not support the video tag.
-                        </video>
+                    transition={{ duration: 0.8, delay: index * 0.15 }}
+                    className="w-full"
+                  >
+                    <div className="relative aspect-[9/16] w-full overflow-hidden bg-neutral-900 shadow-2xl border border-neutral-800">
+                      <video
+                        src={video.src}
+                        poster={video.poster}
+                        autoPlay
+                        loop
+                        muted
+                        playsInline
+                        preload="auto"
+                        className="w-full h-full object-cover"
+                      />
                     </div>
 
                     <div className="flex justify-between items-end mt-3 border-b border-neutral-900 pb-2">
-                        <span className="text-[10px] text-neutral-500 font-mono uppercase">
-                            Fig. Motion — Look 1
-                        </span>
-                        <span className="text-[10px] text-red-900 font-mono uppercase flex items-center gap-2">
-                            <Play className="w-3 h-3 fill-current" /> Watch
-                        </span>
+                      <span className="text-[10px] text-neutral-500 font-mono uppercase">
+                        {video.caption}
+                      </span>
+                      <span className="text-[10px] text-red-900 font-mono uppercase flex items-center gap-2">
+                        Watch
+                      </span>
                     </div>
-                </motion.div>
-              )}
-
-              
+                  </motion.div>
+                ))}
             </div>
           </div>
         </div>

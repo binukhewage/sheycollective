@@ -60,7 +60,7 @@ export default function Home() {
               className="text-[32vw] md:text-[28vw] leading-none font-black text-neutral-900 tracking-tighter"
               style={{ fontFamily: 'var(--font-playfair), serif' }}
           >
-              SHEY
+              Shey
           </h1>
         </motion.div>
 
