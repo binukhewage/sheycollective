@@ -4,7 +4,7 @@ import { useParams } from "next/navigation";
 import { getOutfit } from "../../data.js";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react"; // Added useRef, useEffect
 import { ArrowLeft, X, Maximize2, Play } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -14,6 +14,26 @@ export default function OutfitPage() {
 
   // State for the Fullscreen Lightbox
   const [selectedImage, setSelectedImage] = useState(null);
+
+  // Reference for the video element to force autoplay
+  const videoRef = useRef(null);
+
+  // Force Video Autoplay on Mount
+  useEffect(() => {
+    if (outfit?.video && videoRef.current) {
+      // Browsers require mute for autoplay
+      videoRef.current.muted = true; 
+      const playPromise = videoRef.current.play();
+
+      if (playPromise !== undefined) {
+        playPromise.catch((error) => {
+          console.log("Autoplay prevented:", error);
+          // Auto-play was prevented. This usually happens if the user 
+          // hasn't interacted with the document yet. 
+        });
+      }
+    }
+  }, [outfit]);
 
   if (!outfit) {
     return (
@@ -39,6 +59,7 @@ export default function OutfitPage() {
 
         <div className="max-w-[1600px] mx-auto px-6 pt-32 pb-20 relative z-10">
           <div className="grid lg:grid-cols-12 gap-12 lg:gap-24 items-start">
+            
             {/* --- LEFT COLUMN: STICKY INFO --- */}
             <div className="lg:col-span-4 lg:sticky lg:top-32 h-fit space-y-16 z-20">
               <motion.div
@@ -116,7 +137,7 @@ export default function OutfitPage() {
                 );
               })}
 
-              {/* --- CONDITIONAL VIDEO SECTION (UPDATED FOR AUTOPLAY) --- */}
+              {/* --- CONDITIONAL VIDEO SECTION (FIXED AUTOPLAY) --- */}
               {outfit.video && (
                 <motion.div
                     initial={{ opacity: 0, y: 50 }}
@@ -125,24 +146,24 @@ export default function OutfitPage() {
                     transition={{ duration: 0.8 }}
                     className="md:col-span-2 mt-12 md:mt-24"
                 >
-                    <div className="relative aspect-video w-full overflow-hidden bg-neutral-900 shadow-2xl border border-neutral-800 group">
+                    <div className="relative aspect-[9/16] w-full max-w-[420px] mx-auto overflow-hidden bg-neutral-900 shadow-2xl">
+
                         
-                        {/* Video Player - Updated Attributes */}
                         <video
+                            ref={videoRef} // Attach ref here
                             src={outfit.video.src}
                             poster={outfit.video.poster}
                             autoPlay
                             loop
                             muted
                             playsInline
-                            controls // Keeps controls if user wants to unmute
+                            controls={true}
                             className="w-full h-full object-cover opacity-90 group-hover:opacity-100 transition-opacity duration-700"
                         >
                             Your browser does not support the video tag.
                         </video>
                     </div>
 
-                    {/* Video Caption */}
                     <div className="flex justify-between items-end mt-3 border-b border-neutral-900 pb-2">
                         <span className="text-[10px] text-neutral-500 font-mono uppercase">
                             Fig. Motion — Look 1
@@ -154,15 +175,7 @@ export default function OutfitPage() {
                 </motion.div>
               )}
 
-              {/* End Mark */}
-              <div className="md:col-span-2 flex justify-center opacity-30 pt-24 pb-12">
-                <span
-                  className="text-5xl text-neutral-600"
-                  style={{ fontFamily: "var(--font-pinyon), cursive" }}
-                >
-                  fin.
-                </span>
-              </div>
+              
             </div>
           </div>
         </div>

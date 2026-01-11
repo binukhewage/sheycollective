@@ -82,7 +82,7 @@ export default function Home() {
                 loop
                 muted={isMuted} // Controlled by state
                 playsInline
-                className="w-full h-full object-cover"
+                className="w-full h-full object-contain"
               >
                 <source src="/homevideo.mp4" type="video/mp4" />
               </video>

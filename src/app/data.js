@@ -21,7 +21,7 @@ export const collectionsData = [
         ], 
         video: {
           type: "video",
-          src: "/videos/vailed-vitality-look1.mp4",
+          src: "/outfit1vid1.mp4",
           poster: "/images/outfit1.jpg", // thumbnail
         },
         projectType: "Fashion Collection",
