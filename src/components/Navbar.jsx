@@ -41,7 +41,7 @@ export default function Navbar() {
                 className="text-2xl md:text-3xl font-black text-white tracking-tighter transition-colors"
                 style={{ fontFamily: 'var(--font-playfair), serif' }}
               >
-                SHEY
+                Shey
               </span>
               <span 
                 className="text-lg md:text-xl text-red-500 font-light -mt-2 ml-4 transition-transform group-hover:translate-x-1"

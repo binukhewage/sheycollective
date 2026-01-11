@@ -8,10 +8,10 @@ import { ArrowDown, ArrowUpRight, Volume2, VolumeX } from "lucide-react";
 
 // --- Data ---
 const collections = [
-  { id: 1, title: "CRIMSON VEIL", category: "Vailed Vitality", year: "2025", src: "/images/outfit1.jpg" },
-  { id: 2, title: "NOIR SOUL", category: "Vailed Vitality", year: "2025", src: "/images/outfit2.jpg" },
-  { id: 3, title: "VAMPIRE BALL", category: "Vailed Vitality", year: "2024", src: "/images/outfit3.jpg" },
-  { id: 4, title: "BLEEDING HEART", category: "Vailed Vitality", year: "2024", src: "/images/outfit4.jpg" },
+  { id: 1, title: "", category: "Vailed Vitality", year: "2025", src: "/images/outfit1.jpg" },
+  { id: 2, title: "", category: "Vailed Vitality", year: "2025", src: "/images/outfit2.jpg" },
+  { id: 3, title: "", category: "Vailed Vitality", year: "2024", src: "/images/outfit3.jpg" },
+  { id: 4, title: "", category: "Vailed Vitality", year: "2024", src: "/images/outfit4.jpg" },
 ];
 
 export default function Home() {
@@ -84,7 +84,7 @@ export default function Home() {
                 playsInline
                 className="w-full h-full object-cover"
               >
-                <source src="/hvideo.mp4" type="video/mp4" />
+                <source src="/homevideo.mp4" type="video/mp4" />
               </video>
           </div>
 
@@ -116,7 +116,7 @@ export default function Home() {
               initial={{ opacity: 0, x: 50 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 1.2, duration: 1 }}
-              className="block text-[4rem] md:text-[7rem] text-red-600 font-light drop-shadow-2xl"
+              className="block text-[4rem] md:text-[7rem] text-red-900 font-light drop-shadow-2xl"
               style={{ 
                   fontFamily: 'var(--font-pinyon), cursive',
                   textShadow: "0px 0px 30px rgba(220, 38, 38, 0.4)" 
@@ -134,26 +134,34 @@ export default function Home() {
           className="absolute bottom-8 left-6 md:left-12 z-40 max-w-[200px]"
         >
           <p className="text-[10px] uppercase tracking-widest text-neutral-500 leading-relaxed border-l border-red-900 pl-3">
-              Redefining modern luxury <br /> through the lens of darkness.
+              Redefining modern luxury <br /> Est  2024 <br/>BY Shehara Madurawala.
+              
           </p>
         </motion.div>
 
       </section>
 
       {/* --- STATEMENT / PHILOSOPHY --- */}
+      {/* --- STATEMENT / PHILOSOPHY --- */}
       <section className="py-24 md:py-40 px-6 max-w-5xl mx-auto relative z-10">
         <div className="h-[1px] w-full bg-gradient-to-r from-transparent via-red-900 to-transparent mb-20 opacity-50"></div>
 
-        <div className="grid md:grid-cols-2 gap-12 items-center">
-          <div className="text-red-600 font-mono text-xs uppercase tracking-widest mb-4 md:mb-0">
-            /// 01 — Philosophy
+        <div className="grid md:grid-cols-2 gap-12 items-start">
+          
+          {/* Label: Kept Mono for contrast, but made it cleaner */}
+          <div className="text-red-600 font-mono text-sm md:text-md uppercase tracking-[0.2em] mb-4 md:mb-0 pt-2">
+            /// Founder's vision
           </div>
+
+          {/* Text: Switched to Serif (Playfair) for luxury feel */}
           <div>
-            <p className="text-2xl md:text-4xl font-light leading-snug text-neutral-300">
-              We design for the{" "}
-              <span className="text-red-600 font-bold italic">bold</span>, the
-              fearless, and the nocturnal. Fashion is not just fabric; it is the
-              armor you wear to face the world.
+            <p 
+                className="text-3xl md:text-3xl font-medium leading-tight text-neutral-200"
+                style={{ fontFamily: 'var(--font-playfair), serif' }}
+            >
+              Shey Collective was founnded with a vision to redifine modern luxury through{" "}
+              <span className="text-red-600 italic pr-2">bold,</span>
+              custom-made fashion that celebrates individuality and refined craftsmanship. Rooted in innovation and artistic expression, the brand creates statement pieces that empower women, balance avant-garde design with timeless elegance, and transform fashion into a powerful form of self-expression.
             </p>
           </div>
         </div>

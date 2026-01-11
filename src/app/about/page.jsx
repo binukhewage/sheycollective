@@ -32,7 +32,7 @@ export default function About() {
 
         <motion.div 
             style={{ y: yTitle, opacity: opacityFade }}
-            className="relative z-10 flex flex-col items-center justify-center p-12 border border-neutral-800/50 rounded-full aspect-square w-[300px] md:w-[450px] bg-black/40 backdrop-blur-sm"
+            className="relative z-10 flex flex-col items-center justify-center p-12 border border-red-800/50 rounded-full aspect-square w-[300px] md:w-[450px] bg-black/40 backdrop-blur-sm"
         >
             {/* LOGO COMPOSITION */}
             <div className="flex flex-col items-center relative top-4">
@@ -43,7 +43,7 @@ export default function About() {
                     className="font-bold text-6xl md:text-8xl font-serif tracking-tight text-white text-center"
                     style={{ fontFamily: 'var(--font-playfair), serif' }}
                 >
-                    SHEY
+                    Shey
                 </motion.h1>
                 
                 <motion.span 
@@ -192,7 +192,7 @@ export default function About() {
                         <span className="text-xs uppercase tracking-widest text-neutral-400">The Visionary</span>
                     </div>
 
-                    <h3 className="text-5xl md:text-7xl font-bold text-white mb-4 tracking-tighter">
+                    <h3 className="text-5xl md:text-6xl font-bold text-white mb-4 tracking-tighter">
                         SHEHARA <br />
                         <span className="text-red-900/80">MADURAWALA</span>
                     </h3>
@@ -216,7 +216,7 @@ export default function About() {
 
                     {/* Signature Area */}
                     <div className="mt-16 opacity-60">
-                        <span className="text-4xl" style={{ fontFamily: 'var(--font-pinyon), cursive' }}>Shehara M.</span>
+                        <span className="text-4xl" style={{ fontFamily: 'var(--font-pinyon), cursive' }}>Shehara Madurawala.</span>
                     </div>
                 </motion.div>
             </div>

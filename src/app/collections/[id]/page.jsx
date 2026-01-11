@@ -1,123 +1,222 @@
 "use client";
 
 import { useParams } from "next/navigation";
-import { getOutfit } from "../../data.js"; // Adjust path to where data.js is
+import { getOutfit } from "../../data.js";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowLeft } from "lucide-react";
-import { motion } from "framer-motion";
+import { useState } from "react";
+import { ArrowLeft, X, Maximize2, Play } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 
 export default function OutfitPage() {
   const params = useParams();
-  
-  // Use the ID from the URL (which corresponds to your folder name [id])
-  // We pass params.id to getOutfit, which handles the string-to-number conversion
   const outfit = getOutfit(params.id);
+
+  // State for the Fullscreen Lightbox
+  const [selectedImage, setSelectedImage] = useState(null);
 
   if (!outfit) {
     return (
-      <div className="min-h-screen bg-black flex items-center justify-center text-white">
-        <h1 className="text-2xl">Outfit not found</h1>
-        <Link href="/collections" className="ml-4 text-red-600 hover:underline">Return to Collections</Link>
+      <div className="min-h-screen bg-black flex items-center justify-center text-white font-serif">
+        <div className="text-center">
+          <h1 className="text-4xl mb-4 italic">Outfit not found.</h1>
+          <Link
+            href="/collections"
+            className="text-red-600 text-sm tracking-widest uppercase hover:underline"
+          >
+            Return to Archive
+          </Link>
+        </div>
       </div>
     );
   }
 
   return (
-    <main className="min-h-screen bg-black text-neutral-200 font-sans pt-32 pb-20 overflow-x-hidden">
-      
-      {/* Background Noise */}
-      <div className="fixed inset-0 opacity-20 pointer-events-none bg-[url('https://grainy-gradients.vercel.app/noise.svg')] brightness-50 contrast-200 z-0"></div>
+    <>
+      <main className="min-h-screen bg-black text-neutral-200 font-sans selection:bg-red-900 selection:text-white">
+        {/* --- GLOBAL NOISE --- */}
+        <div className="fixed inset-0 opacity-20 pointer-events-none bg-[url('https://grainy-gradients.vercel.app/noise.svg')] brightness-50 contrast-200 z-0"></div>
 
-      <div className="max-w-[1400px] mx-auto px-6 relative z-10">
-        
-        {/* Back Link */}
-        <Link 
-          href="/collections" 
-          className="inline-flex items-center gap-2 text-neutral-500 hover:text-white uppercase tracking-widest text-xs mb-12 transition-colors"
-        >
-          <ArrowLeft className="w-4 h-4" /> Back to Collections
-        </Link>
+        <div className="max-w-[1600px] mx-auto px-6 pt-32 pb-20 relative z-10">
+          <div className="grid lg:grid-cols-12 gap-12 lg:gap-24 items-start">
+            {/* --- LEFT COLUMN: STICKY INFO --- */}
+            <div className="lg:col-span-4 lg:sticky lg:top-32 h-fit space-y-16 z-20">
+              <motion.div
+                initial={{ opacity: 0, x: -30 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.8 }}
+              >
+                <div className="flex items-center gap-4 mb-6">
+                  <Link
+                    href="/collections"
+                    className="group flex items-center gap-3 text-white uppercase tracking-[0.2em] text-xs hover:text-red-500 transition-colors pointer-events-auto"
+                  >
+                    <div className="p-2 border border-white/20 rounded-full group-hover:border-red-500 transition-colors">
+                      <ArrowLeft className="w-3 h-3" />
+                    </div>
+                  </Link>
+                </div>
 
-        {/* --- INFO SECTION (Matches Screenshot Layout) --- */}
-        <section className="grid md:grid-cols-2 gap-12 md:gap-32 mb-24 items-start">
-          
-          {/* Left Column: Title & Meta */}
-          <div>
-            <motion.h1 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="text-7xl md:text-9xl font-medium text-white tracking-tight mb-16"
-            >
-              {outfit.title}
-            </motion.h1>
+                <h1 className="text-6xl md:text-7xl font-black text-white leading-[0.9] tracking-tighter mb-4">
+                  {outfit.title}
+                </h1>
+                <p className="text-neutral-400 font-mono text-xs uppercase tracking-widest">
+                  {outfit.location}
+                </p>
+              </motion.div>
 
-            <div className="space-y-10">
-              <div className="group">
-                <h3 className="text-2xl font-bold text-neutral-500 mb-2 group-hover:text-white transition-colors">Project type</h3>
-                <p className="text-xl text-white font-light">{outfit.projectType}</p>
-              </div>
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.4, duration: 0.8 }}
+                className="border-t border-neutral-800 pt-8 space-y-8"
+              >
+                <SpecItem label="Project Type" value={outfit.projectType} />
+                <SpecItem label="Products" value={outfit.products} />
+                <SpecItem label="Materials" value={outfit.materials} />
+                <SpecItem label="Technique" value={outfit.technique} />
+              </motion.div>
+            </div>
 
-              <div className="group">
-                <h3 className="text-2xl font-bold text-neutral-500 mb-2 group-hover:text-white transition-colors">Date</h3>
-                <p className="text-xl text-white font-light">{outfit.date}</p>
-              </div>
+            {/* --- RIGHT COLUMN: GALLERY + VIDEO --- */}
+            <div className="lg:col-span-8 grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-12 pt-12 md:pt-0">
+              
+              {/* Image Loop */}
+              {outfit.gallery.map((imgSrc, index) => {
+                const isFirstImage = index === 0;
+                const gridSpanClass = isFirstImage ? "md:col-span-2" : "md:col-span-1";
+                const aspectRatioClass = isFirstImage ? "aspect-[16/9] md:aspect-[21/9]" : "aspect-[2/3] md:aspect-[3/4]";
+                const topMargin = index === 1 || index === 2 ? "mt-8 md:mt-16" : "";
 
-              <div className="group">
-                <h3 className="text-2xl font-bold text-neutral-500 mb-2 group-hover:text-white transition-colors">Location</h3>
-                <p className="text-xl text-white font-light">{outfit.location}</p>
+                return (
+                  <motion.div
+                    key={index}
+                    initial={{ opacity: 0, y: 50 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, margin: "-5%" }}
+                    transition={{ duration: 0.8, ease: "easeOut", delay: index * 0.1 }}
+                    className={`relative w-full cursor-zoom-in group ${gridSpanClass} ${topMargin}`}
+                    onClick={() => setSelectedImage(imgSrc)}
+                  >
+                    <div className={`relative ${aspectRatioClass} w-full overflow-hidden bg-neutral-900 shadow-2xl`}>
+                      <Image
+                        src={imgSrc}
+                        alt={`${outfit.title} detail ${index + 1}`}
+                        fill
+                        className="object-cover scale-100 group-hover:scale-105 transition-transform duration-[1.5s] ease-out"
+                        priority={isFirstImage}
+                      />
+                      <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center">
+                        <div className="bg-black/50 backdrop-blur-md px-4 py-2 rounded-full border border-white/20 flex items-center gap-2 text-white text-xs uppercase tracking-widest">
+                          <Maximize2 className="w-3 h-3" /> Expand
+                        </div>
+                      </div>
+                    </div>
+                  </motion.div>
+                );
+              })}
+
+              {/* --- CONDITIONAL VIDEO SECTION (UPDATED FOR AUTOPLAY) --- */}
+              {outfit.video && (
+                <motion.div
+                    initial={{ opacity: 0, y: 50 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.8 }}
+                    className="md:col-span-2 mt-12 md:mt-24"
+                >
+                    <div className="relative aspect-video w-full overflow-hidden bg-neutral-900 shadow-2xl border border-neutral-800 group">
+                        
+                        {/* Video Player - Updated Attributes */}
+                        <video
+                            src={outfit.video.src}
+                            poster={outfit.video.poster}
+                            autoPlay
+                            loop
+                            muted
+                            playsInline
+                            controls // Keeps controls if user wants to unmute
+                            className="w-full h-full object-cover opacity-90 group-hover:opacity-100 transition-opacity duration-700"
+                        >
+                            Your browser does not support the video tag.
+                        </video>
+                    </div>
+
+                    {/* Video Caption */}
+                    <div className="flex justify-between items-end mt-3 border-b border-neutral-900 pb-2">
+                        <span className="text-[10px] text-neutral-500 font-mono uppercase">
+                            Fig. Motion — Look 1
+                        </span>
+                        <span className="text-[10px] text-red-900 font-mono uppercase flex items-center gap-2">
+                            <Play className="w-3 h-3 fill-current" /> Watch
+                        </span>
+                    </div>
+                </motion.div>
+              )}
+
+              {/* End Mark */}
+              <div className="md:col-span-2 flex justify-center opacity-30 pt-24 pb-12">
+                <span
+                  className="text-5xl text-neutral-600"
+                  style={{ fontFamily: "var(--font-pinyon), cursive" }}
+                >
+                  fin.
+                </span>
               </div>
             </div>
           </div>
+        </div>
+      </main>
 
-          {/* Right Column: Technical Details */}
-          <div className="space-y-12 pt-4 md:pt-24">
-             <DetailBlock label="Products" content={outfit.products} />
-             <DetailBlock label="Materials" content={outfit.materials} />
-             <DetailBlock label="Technique" content={outfit.technique} />
-          </div>
-
-        </section>
-
-        {/* --- IMAGE GALLERY --- */}
-        <section className="space-y-8">
-          {outfit.gallery.map((imgSrc, index) => (
-            <motion.div 
-              key={index}
-              initial={{ opacity: 0, y: 50 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: index * 0.2 }}
-              className="relative w-full h-[60vh] md:h-[85vh] bg-neutral-900 overflow-hidden"
+      {/* --- LIGHTBOX MODAL --- */}
+      <AnimatePresence>
+        {selectedImage && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[100] bg-black/95 backdrop-blur-xl flex items-center justify-center p-4 md:p-12 cursor-zoom-out"
+            onClick={() => setSelectedImage(null)}
+          >
+            <button className="absolute top-6 right-6 text-white/50 hover:text-white transition-colors">
+              <X className="w-8 h-8" />
+            </button>
+            <motion.div
+              initial={{ scale: 0.95, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.95, opacity: 0 }}
+              transition={{ type: "spring", damping: 30, stiffness: 300 }}
+              className="relative w-full h-full max-w-6xl max-h-[90vh]"
+              onClick={(e) => e.stopPropagation()}
             >
-              <Image 
-                src={imgSrc}
-                alt={`${outfit.title} view ${index + 1}`}
+              <Image
+                src={selectedImage}
+                alt="Full Screen View"
                 fill
-                className="object-cover"
-                priority={index === 0}
+                className="object-contain"
+                quality={100}
               />
             </motion.div>
-          ))}
-        </section>
-
-      </div>
-    </main>
+            <div className="absolute bottom-6 left-6 text-white/50 text-xs uppercase tracking-widest font-mono">
+              Viewing High Resolution • Click anywhere to close
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </>
   );
 }
 
-// Sub-component for clean details
-function DetailBlock({ label, content }) {
+// --- SUB-COMPONENT ---
+function SpecItem({ label, value }) {
   return (
-    <motion.div 
-      initial={{ opacity: 0, x: 20 }}
-      animate={{ opacity: 1, x: 0 }}
-      transition={{ duration: 0.6 }}
-    >
-      <span className="block text-xl text-white mb-3">{label} :</span>
-      <p className="text-neutral-300 font-light leading-relaxed text-lg">
-        {content}
+    <div className="group">
+      <h3 className="text-sm font-bold text-neutral-500 uppercase tracking-[0.2em] mb-2 group-hover:text-white transition-colors">
+        {label}
+      </h3>
+      <p className="text-lg md:text-md text-neutral-300 font-light leading-relaxed">
+        {value}
       </p>
-    </motion.div>
+    </div>
   );
 }
