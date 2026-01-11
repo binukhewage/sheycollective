@@ -84,7 +84,7 @@ export default function Home() {
                 playsInline
                 className="w-full h-full object-contain"
               >
-                <source src="/homevideo.mp4" type="video/mp4" />
+                <source src="/homefinal.mp4" type="video/mp4" />
               </video>
           </div>
 

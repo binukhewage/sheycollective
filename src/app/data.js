@@ -103,7 +103,7 @@ export const collectionsData = [
         materials:
           "Dyed cotton greige, crystal beads, wool, twill, buttons, gold chains and hoops.",
         technique:
-          "Beaded garment construction, jeans distressing. fabric manipulation.",
+          "Beaded garment construction. jeans distressing. fabric manipulation.",
       },
       {
         id: "5",
