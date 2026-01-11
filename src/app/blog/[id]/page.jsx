@@ -51,7 +51,7 @@ export default function BlogPost() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
-            className="text-5xl md:text-7xl lg:text-8xl font-black text-white leading-[0.9] tracking-tighter mb-12"
+            className="text-5xl md:text-6xl lg:text-7xl font-black text-white leading-[0.9] tracking-tighter mb-12"
             style={{ fontFamily: 'var(--font-playfair), serif' }}
         >
             {post.title}
@@ -111,33 +111,14 @@ export default function BlogPost() {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-2xl md:text-3xl text-neutral-200 leading-relaxed font-light mb-16 first-letter:text-7xl first-letter:font-serif first-letter:text-red-600 first-letter:float-left first-letter:mr-4 first-letter:mt-[-10px]"
+            className="text-2xl md:text-3xl text-neutral-200 leading-relaxed font-light mb-16 first-letter:text-7xl first-letter:font-serif first-letter:text-red-600 first-letter:float-left first-letter:mr-4 first-letter:mt-[-10px] text-justify"
         >
             {post.excerpt}
         </motion.p>
 
-        {/* Placeholder Body Content */}
-        <div className="space-y-8 text-lg text-neutral-400 leading-loose font-light font-sans">
-            <p>
-                Fashion is often described as a reflection of the times, but for Shey Collective, it is a rebellion against them. The process begins not with a sketch, but with a feeling—a raw, often dark emotion that demands physical form. 
-            </p>
-            <p>
-                "I wanted to create something that felt like armor," Shehara explains from her Colombo atelier. "Women are constantly told to be soft, to be palatable. My designs are for the women who refuse that narrative. They are sharp, structural, and unapologetic."
-            </p>
+        <p className="text-lg text-neutral-400 leading-relaxed font-light mb-16 text-justify">{post.article}</p>
 
-            {/* Inline Quote */}
-            <blockquote className="border-l-2 border-red-600 pl-8 py-4 my-12">
-                <p className="text-3xl text-white italic font-serif">
-                    "We don't just sew fabric. We engineer confidence. Every stitch is a deliberate act of defiance."
-                </p>
-            </blockquote>
-
-            <p>
-                The collection utilizes bio-mechanical aesthetics, merging organic textures with industrial rigidity. Utilizing materials like dyed cotton greige fabric, silicon, and oxygen wires, the garments transcend traditional clothing to become wearable art installations.
-            </p>
-        </div>
-
-        {/* --- IMAGE GRID (Remaining Images) --- */}
+        {/* --- IMAGE GRID (Remaining Images) --- 
         {post.images && post.images.length > 1 && (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-24">
                 {post.images.slice(1).map((img, index) => (
@@ -155,7 +136,7 @@ export default function BlogPost() {
                 ))}
             </div>
         )}
-
+*/}
         {/* --- SHARE / FOOTER --- */}
         <div className="mt-32 pt-12 border-t border-neutral-900 flex justify-between items-center">
             <span className="text-xs text-neutral-500 uppercase tracking-widest">

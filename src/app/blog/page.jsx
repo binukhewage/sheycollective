@@ -1,10 +1,10 @@
-"use client"
+"use client";
+
 import { motion } from "framer-motion";
 import Link from "next/link";
 import Image from "next/image";
 import { ArrowUpRight, Calendar, User, Heart, MessageCircle } from "lucide-react";
-import { blogPosts } from "../blogdata"; // Adjust path to where you saved blogdata.js
-
+import { blogPosts } from "../blogdata"; // Adjust path if needed
 
 export default function Blog() {
   return (
@@ -29,7 +29,7 @@ export default function Blog() {
                 <span className="text-xs tracking-[0.3em] uppercase text-neutral-500">THE JOURNAL</span>
             </motion.div>
             <h1 
-                className="text-[12vw] md:text-[8vw] leading-[0.8] font-black text-white tracking-tighter mix-blend-exclusion"
+                className="text-[8vw] md:text-[6vw] leading-[0.8] font-black text-white tracking-tighter mix-blend-exclusion"
                 style={{ fontFamily: 'var(--font-playfair), serif' }}
             >
                 EDITORIAL
@@ -44,50 +44,19 @@ export default function Blog() {
             
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20 items-start">
                 
-                {/* LEFT: IMAGE COLLAGE */}
-                <div className="lg:col-span-7">
-                    {post.images && post.images.length > 1 ? (
-                        // Collage Layout (3 Images)
-                        <div className="grid grid-cols-2 gap-2 aspect-[4/3] w-full">
-                            {/* Main large image (Left half - spans 2 rows) */}
-                            <div className="relative w-full h-full row-span-2 overflow-hidden bg-neutral-900">
-                                <Image 
-                                    src={post.images[0]} 
-                                    alt="Process detail" 
-                                    fill 
-                                    className="object-cover group-hover:scale-105 transition-transform duration-1000 ease-out grayscale group-hover:grayscale-0"
-                                />
-                            </div>
-                            {/* Top right */}
-                            <div className="relative w-full h-full overflow-hidden bg-neutral-900">
-                                 <Image 
-                                    src={post.images[1]} 
-                                    alt="Process detail" 
-                                    fill 
-                                    className="object-cover group-hover:scale-105 transition-transform duration-1000 ease-out grayscale group-hover:grayscale-0"
-                                />
-                            </div>
-                            {/* Bottom right */}
-                            <div className="relative w-full h-full overflow-hidden bg-neutral-900">
-                                 <Image 
-                                    src={post.images[2]} 
-                                    alt="Process detail" 
-                                    fill 
-                                    className="object-cover group-hover:scale-105 transition-transform duration-1000 ease-out grayscale group-hover:grayscale-0"
-                                />
-                            </div>
-                        </div>
-                    ) : (
-                        // Single Image Fallback
-                        <div className="relative aspect-video w-full overflow-hidden bg-neutral-900">
-                             <Image 
-                                src={post.images ? post.images[0] : ""} 
-                                alt="Blog cover" 
-                                fill 
-                                className="object-cover group-hover:scale-105 transition-transform duration-1000 ease-out grayscale group-hover:grayscale-0"
-                            />
-                        </div>
-                    )}
+                {/* LEFT: SINGLE SQUARED IMAGE */}
+                <div className="lg:col-span-6">
+                    <Link href={`/blog/${post.id}`} className="block relative aspect-square w-full overflow-hidden bg-neutral-900">
+                         <Image 
+                            src={post.images ? post.images[0] : ""} 
+                            alt="Blog cover" 
+                            fill 
+                            className="object-cover group-hover:scale-105 transition-transform duration-1000 ease-out group-hover:grayscale-0"
+                        />
+                        
+                        {/* Overlay Gradient on Hover */}
+                        <div className="absolute inset-0 bg-red-900/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 mix-blend-overlay pointer-events-none"></div>
+                    </Link>
                 </div>
 
                 {/* RIGHT: CONTENT */}
@@ -117,7 +86,7 @@ export default function Blog() {
                         </Link>
 
                         {/* Excerpt */}
-                        <p className="text-neutral-400 text-lg leading-relaxed font-light mb-10 border-l border-neutral-800 pl-6 group-hover:border-red-600 transition-colors duration-500">
+                        <p className="text-neutral-400 text-lg leading-relaxed font-light mb-10 border-l border-neutral-800 pl-6 group-hover:border-red-600 transition-colors duration-500 text-justify">
                             {post.excerpt}
                         </p>
                     </div>
