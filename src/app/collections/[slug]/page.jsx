@@ -76,7 +76,6 @@ export default function OutfitPage() {
 
         <div className="max-w-[1600px] mx-auto px-6 pt-32 pb-20 relative z-10">
           <div className="grid lg:grid-cols-12 gap-12 lg:gap-24 items-start">
-
             {/* LEFT */}
             <div className="lg:col-span-4 lg:sticky lg:top-32 space-y-16">
               <Link
@@ -131,15 +130,15 @@ export default function OutfitPage() {
               {outfit.videos?.map((vid, i) => (
                 <div key={i}>
                   <video
-  src={vid.video?.asset?.url}
-  poster={vid.poster && urlFor(vid.poster).url()}
-  muted
-  playsInline
-  loop
-  controls
-  preload="auto"
-  className="w-full aspect-[9/16] object-cover"
-/>
+                    src={vid.video?.asset?.url}
+                    poster={vid.poster && urlFor(vid.poster).url()}
+                    muted
+                    playsInline
+                    loop
+                    controls
+                    preload="auto"
+                    className="w-full aspect-[9/16] object-cover"
+                  />
                   <p className="text-xs text-neutral-500 mt-2 font-mono uppercase">
                     {vid.caption}
                   </p>
