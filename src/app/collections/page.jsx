@@ -4,15 +4,57 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import Image from "next/image";
 import { ArrowUpRight } from "lucide-react";
-import { collectionsData } from "../data.js"; // Adjust path to where data.js is
+import { client } from "@/sanity/client";
+import { urlFor } from "@/sanity/image";
+import { useEffect, useState } from "react";
 
 export default function Collections() {
+  const [collections, setCollections] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+  client
+    .fetch(`
+      *[_type=="collection"]{
+        _id,
+        title,
+        year,
+        description,
+        outfits[]->{
+          _id,
+          title,
+          "slug": slug.current,
+          coverImage
+        }
+      }
+    `)
+    .then((data) => {
+      console.log("Sanity Data:", data);
+      setCollections(data);
+      setLoading(false);
+    })
+    .catch((err) => {
+      console.error("Sanity error:", err);
+      setLoading(false);
+    });
+}, []);
+
+  if (loading) {
+  return (
+    <div className="min-h-screen bg-black flex items-center justify-center text-white font-mono tracking-widest">
+      Rendering Collections…
+    </div>
+  );
+}
+
+
   return (
     <main className="min-h-screen bg-black text-neutral-200 selection:bg-red-900 selection:text-white font-sans overflow-x-hidden pt-32 pb-20">
       {/* Background Noise */}
       <div className="fixed inset-0 opacity-20 pointer-events-none bg-[url('https://grainy-gradients.vercel.app/noise.svg')] brightness-50 contrast-200 z-0"></div>
 
       <div className="max-w-[1400px] mx-auto px-6 relative z-10">
+        {/* Intro */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -23,6 +65,7 @@ export default function Collections() {
             Recent Works
           </span>
         </motion.div>
+
         {/* Page Header */}
         <motion.h1
           initial={{ opacity: 0, y: 20 }}
@@ -33,10 +76,10 @@ export default function Collections() {
           COLLECTIONS
         </motion.h1>
 
-        {/* --- Loop Through Collections --- */}
-        {collectionsData.map((collection) => (
+        {/* Collections Loop */}
+        {collections.map((collection) => (
           <section
-            key={collection.id}
+            key={collection._id}
             className="mb-40 border-t border-neutral-900 pt-16"
           >
             {/* Collection Header */}
@@ -51,6 +94,7 @@ export default function Collections() {
                   </h2>
                 </div>
               </div>
+
               <div className="md:col-span-7">
                 <p className="text-lg md:text-xl text-neutral-400 leading-relaxed max-w-2xl">
                   {collection.description}
@@ -60,10 +104,10 @@ export default function Collections() {
 
             {/* Outfits Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {collection.outfits.map((outfit) => (
+              {collection.outfits?.map((outfit) => (
                 <Link
-                  key={outfit.id}
-                  href={`/collections/${outfit.id}`}
+                  key={outfit._id}
+                  href={`/collections/${outfit.slug}`}
                   className="group block"
                 >
                   <div className="relative aspect-[3/4] overflow-hidden bg-neutral-900 mb-4">
@@ -72,14 +116,17 @@ export default function Collections() {
                     {/* Image */}
                     <div className="relative w-full h-full">
                       <Image
-                        src={outfit.coverImage}
+                        src={urlFor(outfit.coverImage)
+                          .width(800)
+                          .height(1200)
+                          .url()}
                         alt={outfit.title}
                         fill
-                        className="object-cover group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700"
+                        className="object-cover group-hover:scale-105 transition-all duration-700"
                       />
                     </div>
 
-                    {/* Hover Overlay Button */}
+                    {/* Hover Icon */}
                     <div className="absolute top-4 right-4 z-20 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
                       <div className="bg-black/50 backdrop-blur-md p-2 rounded-full border border-neutral-700">
                         <ArrowUpRight className="w-5 h-5 text-white" />
