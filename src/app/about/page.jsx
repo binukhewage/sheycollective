@@ -165,7 +165,7 @@ export default function About() {
                     <img 
                         src="/images/shehara.JPG" 
                         alt="Shehara Madurawala"
-                        className="w-full h-full object-cover opacity-60 grayscale group-hover:grayscale-0 transition-all duration-1000"
+                        className="w-full h-full object-cover opacity-60 group-hover:grayscale-0 transition-all duration-1000"
                     />
                     {/* Fallback text if no image */}
                     <span className="absolute text-xs uppercase tracking-widest opacity-20">Shehara Madurawala Portrait</span>
