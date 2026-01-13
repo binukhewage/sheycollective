@@ -3,7 +3,7 @@
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
 import Image from "next/image";
-import { ArrowDown, Star, Quote } from "lucide-react";
+import { ArrowDown, Star, Quote,ArrowRight } from "lucide-react";
 
 export default function About() {
   const containerRef = useRef(null);
@@ -163,7 +163,7 @@ export default function About() {
                 {/* Replace src with actual image of Shehara */}
                 <div className="w-full h-full bg-neutral-800 flex items-center justify-center text-neutral-600">
                     <img 
-                        src="/images/shehara.JPG" // Put your image here
+                        src="/images/shey.jpg" 
                         alt="Shehara Madurawala"
                         className="w-full h-full object-cover opacity-60 grayscale group-hover:grayscale-0 transition-all duration-1000"
                     />

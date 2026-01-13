@@ -90,10 +90,10 @@ export default function Contact() {
                 </li>
                 <li>
                   <a
-                    href="tel:+94718350877"
+                    href="tel:+9471835087"
                     className="hover:text-white transition-colors"
                   >
-                    +94 71 835 0877
+                    +94 71 183 5087
                   </a>
                 </li>
 
