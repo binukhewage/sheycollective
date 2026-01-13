@@ -198,7 +198,7 @@ export default function Home() {
               }`}
             >
               <div className="relative aspect-[3/4] w-full overflow-hidden bg-neutral-900">
-                <div className="absolute inset-0 bg-red-900/40 mix-blend-multiply opacity-0 group-hover:opacity-100 transition-opacity duration-700 z-10" />
+                <div className="absolute inset-0  mix-blend-multiply opacity-0 group-hover:opacity-100 transition-opacity duration-700 z-10" />
 
                 <div className="relative w-full h-full group-hover:scale-105 transition-transform duration-1000 ease-out">
                    <Image 
