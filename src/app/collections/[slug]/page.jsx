@@ -29,15 +29,14 @@ export default function OutfitPage() {
           technique,
           gallery,
           videos[]{
-  caption,
-  poster,
-  video{
-    asset->{
-      url
-    }
-  }
-}
-
+            caption,
+            poster,
+            video{
+              asset->{
+                url
+              }
+            }
+          }
         }
         `,
         { slug }
@@ -132,6 +131,7 @@ export default function OutfitPage() {
                   <video
                     src={vid.video?.asset?.url}
                     poster={vid.poster && urlFor(vid.poster).url()}
+                    autoPlay
                     muted
                     playsInline
                     loop
